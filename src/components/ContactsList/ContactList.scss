@@ -1,0 +1,29 @@
+.list-wrapper {
+  background-color: #3d5a80;
+  border-radius: 4px;
+  padding: 24px;
+  width: 70%;
+  margin: 0 auto;
+}
+
+.item-list {
+  list-style-type: none;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+  padding: 16px;
+  margin: 0;
+  li {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    height: 48px;
+    border-bottom: 1px solid #3d5a80;
+    font-weight: bold;
+  }
+}
+
+
