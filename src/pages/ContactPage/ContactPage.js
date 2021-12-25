@@ -3,13 +3,18 @@ import { useParams } from "react-router-dom";
 import AddNewFields from "../../components/AddNewField/AddNewField";
 import Item from "../../components/Item/Item";
 
-const ItemPage = ({ contacts, addNewField, toggleModal }) => {
+const ItemPage = ({ contacts, updateField, toggleModal, handleUndo }) => {
   let { id: currentId } = useParams();
   const contactItem = contacts.filter(({ id }) => id === +currentId);
   return (
     <>
-      <Item contactItem={contactItem[0]} toggleModal={toggleModal} />
-      <AddNewFields contactItem={contactItem[0]} addNewField={addNewField} />
+      <Item
+        contactItem={contactItem[0]}
+        toggleModal={toggleModal}
+        updateField={updateField}
+        handleUndo={handleUndo}
+      />
+      <AddNewFields contactItem={contactItem[0]} updateField={updateField} />
     </>
   );
 };

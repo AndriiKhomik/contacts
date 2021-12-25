@@ -1,26 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 import "./AddNewField.scss";
 
-const AddNewFields = ({ contactItem, addNewField }) => {
-  const [newField, setNewField] = useState({ fieldName: "", fieldValue: "" });
-  const [currentItem, setCurrentItem] = useState({});
+const initalValue = { fieldName: "", fieldValue: "" };
 
-  useEffect(() => {
-    setCurrentItem(contactItem);
-  }, [contactItem]);
+const AddNewFields = ({ contactItem, addNewField }) => {
+  const [newField, setNewField] = useState(initalValue);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (newField.fieldName.length > 0 && newField.fieldValue.length > 0) {
       const newItem = {
-        ...currentItem,
+        ...contactItem,
         [newField.fieldName]: newField.fieldValue,
       };
-      setCurrentItem(newItem);
       addNewField(newItem);
-      setNewField({ fieldName: "", fieldValue: "" });
+      setNewField(initalValue);
     }
   };
 

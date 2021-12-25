@@ -5,7 +5,7 @@ import "./ContactList.scss";
 const ContactList = ({ contacts, getId }) => {
   const contactList = contacts.map((contact) => (
     <li key={contact.id}>
-      <ContactItem contact={contact} getId={() => getId(contact.id)} />
+      <ContactItem contact={contact} onDelete={() => getId(contact.id)} />
     </li>
   ));
 

@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Route, Switch } from "react-router-dom";
-import ItemPage from "../../pages/ItemPage/ItemPage";
+import ContactPage from "../../pages/ContactPage/ContactPage";
 import AddContactForm from "../AddContactForm/AddContactForm";
 import ContactsList from "../ContactsList/ContactsList";
 import Modal from "../Modal/Modal";
@@ -28,39 +28,47 @@ function App() {
     },
   ]);
 
-  const addItem = (name, lastName) => {
-    const newItem = { id: contacts.length + 1, name, lastName };
-    setContacts((contacts) => {
+  const addItem = useCallback(
+    (name, lastName) => {
+      const newItem = { id: contacts.length + 1, name, lastName };
       const newContacts = [...contacts, newItem];
-      return newContacts;
-    });
+      setContacts(newContacts);
+    },
+    [contacts]
+  );
+
+  const handleUndo = () => {
+    setContacts((prevState) => prevState);
   };
 
-  const addNewField = (obj) => {
-    console.log(obj);
-    const idx = contacts.findIndex((contact) => contact.id === obj.id);
-    setContacts((contacts) => {
-      return [...contacts.slice(0, idx), obj, ...contacts.slice(idx + 1)];
-    });
-  };
+  const updateField = useCallback(
+    (obj) => {
+      const idx = contacts.findIndex((contact) => contact.id === obj.id);
+      const updatedContacts = [
+        ...contacts.slice(0, idx),
+        obj,
+        ...contacts.slice(idx + 1),
+      ];
+      setContacts(updatedContacts);
+    },
+    [contacts]
+  );
 
-  const toggleModal = () => {
+  const toggleModal = useCallback(() => {
     setOpen(!open);
-  };
+  }, [open]);
 
   const getId = (id) => {
     setOpen(!open);
     setItemId(id);
   };
 
-  const onDelete = () => {
-    setContacts((contacts) => {
-      return contacts.filter((contact) => contact.id !== itemId);
-    });
+  const onDelete = useCallback(() => {
+    console.log(itemId);
+    const updatedContacts = contacts.filter((contact) => contact.id !== itemId);
+    setContacts(updatedContacts);
     toggleModal();
-  };
-
-  const onDeleteField = () => {};
+  }, [contacts, toggleModal, itemId]);
 
   return (
     <div className="App">
@@ -68,13 +76,18 @@ function App() {
       <Switch>
         <Route exact path="/">
           <AddContactForm addItem={addItem} />
-          <ContactsList contacts={contacts} getId={getId} />
+          <ContactsList
+            contacts={contacts}
+            toggleModal={toggleModal}
+            getId={getId}
+          />
         </Route>
         <Route exact path="/contact/:id">
-          <ItemPage
+          <ContactPage
             contacts={contacts}
-            addNewField={addNewField}
+            updateField={updateField}
             toggleModal={toggleModal}
+            handleUndo={handleUndo}
           />
         </Route>
         <Route path="*">
@@ -82,7 +95,6 @@ function App() {
         </Route>
       </Switch>
       <Modal onDelete={onDelete} open={open} toggleModal={toggleModal} />
-      <Modal onDelete={onDeleteField} open={open} toggleModal={toggleModal} />
     </div>
   );
 }

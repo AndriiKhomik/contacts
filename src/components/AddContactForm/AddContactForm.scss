@@ -1,15 +1,27 @@
 .form-wrapper {
   background-color: #3d5a80;
-  width: 70%;
+  max-width: 636px;
   border-radius: 4px;
   padding: 24px;
   margin: 0 auto 36px;
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    @media (min-width: 576px) {
+      flex-direction: row;
+    }
+  }
   input {
     padding: 8px;
     border-radius: 4px;
     outline: none;
     border: none;
-    margin-right: 16px;
+    margin-bottom: 8px;
+    @media (min-width: 576px) {
+      margin-bottom: 0;
+    }
   }
 }
 
