@@ -37,9 +37,9 @@ function App() {
     [contacts]
   );
 
-  const handleUndo = () => {
+  const handleUndo = useCallback(() => {
     setContacts((prevState) => prevState);
-  };
+  }, []);
 
   const updateField = useCallback(
     (obj) => {

@@ -1,4 +1,5 @@
 import React from "react";
+
 import Modal from "../Modal/Modal";
 import "./Item.scss";
 
@@ -8,9 +9,6 @@ const Item = ({
   contactItem: currentItem,
   handleUndo,
 }) => {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
 
   const handleDelete = (objKey) => () => {
     const upd = currentItem;
@@ -24,7 +22,7 @@ const Item = ({
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="form-item-wrapper">
+      <form className="form-item-wrapper">
         <ul>
           {Object.keys(currentItem).map((objKey) => (
             <li key={objKey}>
