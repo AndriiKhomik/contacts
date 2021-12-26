@@ -1,9 +1,10 @@
 import React, { useState, useCallback } from "react";
 import "./Item.scss";
 
-const Item = ({ updateField, currentItem, handleUndo }) => {
+const Item = ({ updateField, currentItem = {}, handleUndo }) => {
   const [objKey, setObjKey] = useState("");
   const [open, setOpen] = useState(false);
+
   const isOpen = open ? "modalContainer active" : "modalContainer";
 
   const handleDelete = (objKey) => () => {
@@ -27,29 +28,30 @@ const Item = ({ updateField, currentItem, handleUndo }) => {
     updateField({ ...currentItem, [key]: e.target.value });
   };
 
-  const renderContactList = Object.keys(currentItem).map((objKey) => (
-    <li key={objKey}>
-      <input
-        type="text"
-        disabled
-        value={objKey}
-        onChange={() => {}}
-        className="key-input"
-      />
-      <input
-        type="text"
-        value={currentItem[objKey]}
-        onChange={handleChange(objKey)}
-        className="key-input"
-      />
-      <button type="submit" onClick={handleUndo}>
-        <i className="fas fa-undo"></i>
-      </button>
-      <button type="submit" onClick={handleKeyAtToggleModal(objKey)}>
-        <i className="fas fa-trash"></i>
-      </button>
-    </li>
-  ));
+  const renderContactList = Object.keys(currentItem).map((objKey) => {
+    if (objKey === "id") {
+      return null;
+    }
+    return (
+      <li key={objKey}>
+        <div>{objKey}</div>
+        <input
+          type="text"
+          value={currentItem[objKey]}
+          onChange={handleChange(objKey)}
+          className="key-input"
+        />
+        <div className="btn-group">
+          <button type="submit" onClick={handleUndo}>
+            <i className="fas fa-undo"></i>
+          </button>
+          <button type="submit" onClick={handleKeyAtToggleModal(objKey)}>
+            <i className="fas fa-trash"></i>
+          </button>
+        </div>
+      </li>
+    );
+  });
 
   return (
     <>

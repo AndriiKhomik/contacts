@@ -1,8 +1,7 @@
 import { useCallback, useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import ContactPage from "../../pages/ContactPage/ContactPage";
-import AddContactForm from "../AddContactForm/AddContactForm";
-import ContactsList from "../ContactsList/ContactsList";
+import Home from "../../pages/Home/Home";
 import Modal from "../Modal/Modal";
 import "./App.scss";
 
@@ -30,7 +29,9 @@ function App() {
 
   const addItem = useCallback(
     (name, lastName) => {
-      const maxId = contacts.reduce((acc, curr) => acc.b > curr.b ? acc : curr).id;
+      const maxId = contacts.reduce((acc, curr) =>
+        acc.b > curr.b ? acc : curr
+      ).id;
       const newItem = { id: maxId + 1, name, lastName };
       const newContacts = [...contacts, newItem];
       setContacts(newContacts);
@@ -75,8 +76,8 @@ function App() {
       <h2>Contacts list application</h2>
       <Switch>
         <Route exact path="/">
-          <AddContactForm addItem={addItem} />
-          <ContactsList
+          <Home
+            addItem={addItem}
             contacts={contacts}
             toggleModal={toggleModal}
             getId={getId}

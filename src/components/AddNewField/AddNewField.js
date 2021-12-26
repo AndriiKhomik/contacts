@@ -7,9 +7,16 @@ const initalValue = { fieldName: "", fieldValue: "" };
 
 const AddNewFields = ({ contactItem, updateField }) => {
   const [newField, setNewField] = useState(initalValue);
+  const [error, setError] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (newField.fieldName === "" && newField.fieldValue === "") {
+      return setError(true);
+    }
+    if (newField.fieldName === " " && newField.fieldValue === " ") {
+      return setError(true);
+    }
     if (newField.fieldName.length > 0 && newField.fieldValue.length > 0) {
       const newItem = {
         ...contactItem,
@@ -18,6 +25,7 @@ const AddNewFields = ({ contactItem, updateField }) => {
       updateField(newItem);
       setNewField(initalValue);
     }
+    setError(false);
   };
 
   const onValueChange = (e) => {
@@ -44,6 +52,7 @@ const AddNewFields = ({ contactItem, updateField }) => {
         <button className="add-btn" type="submit">
           Add
         </button>
+        {error && <div className="error">Fields shouldn't be empty</div>}
       </form>
       <Link className="home-btn" type="submit" to="/">
         Go to the main page
