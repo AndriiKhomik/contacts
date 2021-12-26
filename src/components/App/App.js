@@ -30,7 +30,8 @@ function App() {
 
   const addItem = useCallback(
     (name, lastName) => {
-      const newItem = { id: contacts.length + 1, name, lastName };
+      const maxId = contacts.reduce((acc, curr) => acc.b > curr.b ? acc : curr).id;
+      const newItem = { id: maxId + 1, name, lastName };
       const newContacts = [...contacts, newItem];
       setContacts(newContacts);
     },
@@ -64,7 +65,6 @@ function App() {
   };
 
   const onDelete = useCallback(() => {
-    console.log(itemId);
     const updatedContacts = contacts.filter((contact) => contact.id !== itemId);
     setContacts(updatedContacts);
     toggleModal();
@@ -86,7 +86,6 @@ function App() {
           <ContactPage
             contacts={contacts}
             updateField={updateField}
-            toggleModal={toggleModal}
             handleUndo={handleUndo}
           />
         </Route>
@@ -94,7 +93,11 @@ function App() {
           <h4>Page not found</h4>
         </Route>
       </Switch>
-      <Modal onDelete={onDelete} open={open} toggleModal={toggleModal} />
+      <Modal open={open} toggleModal={toggleModal}>
+        <button className="btn-modal" onClick={onDelete}>
+          yes
+        </button>
+      </Modal>
     </div>
   );
 }

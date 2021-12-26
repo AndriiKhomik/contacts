@@ -5,7 +5,7 @@ import "./AddNewField.scss";
 
 const initalValue = { fieldName: "", fieldValue: "" };
 
-const AddNewFields = ({ contactItem, addNewField }) => {
+const AddNewFields = ({ contactItem, updateField }) => {
   const [newField, setNewField] = useState(initalValue);
 
   const handleSubmit = (e) => {
@@ -15,7 +15,7 @@ const AddNewFields = ({ contactItem, addNewField }) => {
         ...contactItem,
         [newField.fieldName]: newField.fieldValue,
       };
-      addNewField(newItem);
+      updateField(newItem);
       setNewField(initalValue);
     }
   };

@@ -1,10 +1,7 @@
 import React from "react";
 import "./Modal.scss";
 
-const Modal = ({ open, onDelete, toggleModal }) => {
-  const handleClick = () => {
-    onDelete();
-  };
+const Modal = ({ open, toggleModal, children }) => {
   const isOpen = open ? "modalContainer active" : "modalContainer";
   return (
     <div onClick={toggleModal} className={isOpen}>
@@ -15,9 +12,7 @@ const Modal = ({ open, onDelete, toggleModal }) => {
           </span>
           Do you want to delete this item?
         </h4>
-        <button className="btn-modal" onClick={handleClick}>
-          yes
-        </button>
+        {children}
         <button className="btn-modal" onClick={toggleModal}>
           no
         </button>
